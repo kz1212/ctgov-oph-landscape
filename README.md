@@ -65,54 +65,71 @@ AACT_USER=YOUR_USERNAME
 AACT_PASSWORD=YOUR_PASSWORD
 
 ---------------------------------------------------------------------------
-Pipeline Execution Instructions
+Execution Instructions
 ---------------------------------------------------------------------------
 
-Run the scripts in numerical order to generate the analysis-ready dataset.
+## Setup ### Environment Variables Create a file named .env in the root directory to store your database credentials. Do not commit this file.
 
-Phase I: Connection & Cohort Construction
-1) Verify Connection: Ensure database access is active.
-   python 00_test_connection.py
+ini
+AACT_USER=your_username
+AACT_PASSWORD=your_password
+AACT_HOST=aact-db.ctti-clinicaltrials.org
+AACT_PORT=5432
+AACT_DB=aact
 
-2) Build Master Cohort: Extracts trials using the dual MeSH and text-anchor logic.
-   python 02_build_oph_master_base.py
+##Install Dependencies ##
+pip install pandas sqlalchemy psycopg2-binary seaborn matplotlib python-dotenv
 
-Phase II: Classification & Labeling
-3) Assign Axis B (Modality): Categorizes interventions and applies "procedural up-ranking"
-   (e.g., moving Device trials to Surgical if procedural verbs are present).
-   python 03_add_modality_axisB.py
 
-4) Assign & Refine Axis A (Subspecialty): Maps trials to clinical buckets and performs the Retina
-   Split (Medical vs. Surgical Retina) based on Axis B results.
-   python 07_rebuild_axisA_v2.py
+---------------------------------------------------------------------------
+Pipeline Steps
+---------------------------------------------------------------------------
+Usage: The Pipeline
+The analysis is consolidated into four sequential steps. Run them in order:
 
-Phase III: Sponsor Analysis & Final Export
-5) Attribute Sponsorship: Maps lead sponsors to standardized categories: Industry, NIH, U.S. Fed, or Other.
-   python 09_add_sponsor_lead.py
+##1. Build the Cohort (run_pipeline.py)##
+Extracts IDs using MeSH ("Eye Diseases") and Regex Text Search. Merges them, fetches metadata (Title, Phase, Sponsor, Enrollment), and applies the hierarchical classification logic.
 
-6) Final Export: Cleans and freezes the data for analysis.
-   python 977_export_report.py
+Key Logic: MeSH > Regex > General.
 
-7) Generate Reproducibility Log: Run this last to record the environment state and file hashes.
-   python 13_make_reproducibility_report.py
+Refinement: Auto-detects AI trials and "Up-Ranks" device/imaging trials to "Surgical" only if specific procedural keywords are found.
+
+Output: outputs/oph_master_final_rebuild.csv
+
+##2. Generate Figures (make_figures.py)##
+Produces the visualizations used in the manuscript.
+
+Figure 1: Subspecialty vs. Modality Heatmap (Multiple accessibility styles).
+
+Figure 2: Industry Sponsorship Share (Bar Graph).
+
+Figure 3: Longitudinal Retina Research Trends (Line Plot).
+
+Output: outputs/Figure_*.png
+
+##3. Generate Manuscript Tables (make_manuscript_tables.py)##
+Calculates aggregate statistics and exports definition dictionaries for the Supplement.
+
+Tables: AI Prevalence, Phase Distribution, Cohort Flow, Unclassified Analysis.
+
+Output: tables/*.csv
+
+##4. Final Export & Reproducibility (99_finalize_data.py & make_reproducibility_log.py)##
+Creates the clean, "frozen" dataset for public sharing and generates a cryptographic hash log of the outputs.
 
 ---------------------------------------------------------------------------
 Output Structure
 ---------------------------------------------------------------------------
 
-All final artifacts are stored in the outputs/ directory.
+Primary cohort file: outputs/oph_master_final_rebuild.csv
 
-File: oph_analysis_ready.csv
-Description: Primary Export- The final dataset for user-driven analysis.
+Figures: outputs/Figure_*.png
 
-File: reproducibility_report.txt
-Description: Technical log containing AACT freshness and file hashes.
+Tables: tables/*.csv
 
-File: axisB_mapping.json
-Description: The dictionary used to map raw AACT types to modality buckets.
+Frozen dataset: outputs/Ocular_Landscape_Frozen_Dataset.csv
 
-File: mesh_axisA_mapping.json
-Description: The mapping of MeSH terms to clinical subspecialties.
+Reproducibility log: outputs/reproducibility_report.txt
 
 ---------------------------------------------------------------------------
 Notes
