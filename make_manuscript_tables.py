@@ -128,7 +128,7 @@ MESH_TO_BUCKET = {
 }
 pd.DataFrame(list(MESH_TO_BUCKET.items()), columns=['MeSH_Term', 'Bucket']).to_csv('tables/Table_S1_1_MeSH_Dictionary.csv', index=False)
 
-# S2.1 MASTER REGEX
+#MASTER REGEX
 MASTER_REGEX = {
     "Ocular Oncology": [r"retinoblastoma", r"uveal melanoma", r"choroidal melanoma", r"intraocular lymphoma", r"ocular.*lymphoma", r"conjunctival melanoma", r"tebentafusp", r"\beye neoplasm"],
     "Refractive Surgery": [r"\blasik\b", r"\bprk\b", r"\bsmile\b", r"keratomileusis", r"\bphakic iol\b", r"\bicl\b", r"\bmyopia\b", r"\bhyperopia\b", r"\bastigmatism\b", r"\bpresbyopia\b", r"\brefractive error\b", r"\borthokeratology\b", r"\bcontact lens\b", r"\bcontact lenses\b", r"\bscleral lens\b"],
@@ -148,7 +148,7 @@ for cat, patterns in MASTER_REGEX.items():
         regex_list.append({'Category': cat, 'Pattern': pat})
 pd.DataFrame(regex_list).to_csv('tables/Table_S2_1_Regex_Dictionary.csv', index=False)
 
-# S3.1 Intervention Mapping
+#Intervention Mapping
 mod_map = {
     "DRUG": "Pharmacologic", "BIOLOGICAL": "Pharmacologic", "PROCEDURE": "Surgical/Interventional", "SURGICAL": "Surgical/Interventional",
     "DEVICE": "Device/Hardware", "DIAGNOSTIC_TEST": "Imaging/Diagnostics", "BEHAVIORAL": "Behavioral/Service", 
@@ -156,7 +156,7 @@ mod_map = {
 }
 pd.DataFrame(list(mod_map.items()), columns=['AACT_Type', 'Bucket']).to_csv('tables/Table_S3_1_Intervention_Mapping.csv', index=False)
 
-# S3.2 Up-Rank Triggers
+# Up-Rank Triggers
 proc_triggers = [
     "vitrectom", "trabeculect", "blepharoplast", "phaco", "capsulotom", "keratoplast", "corneal transplant", "crosslink", 
     "pterygium excis", "laser trabeculoplasty", "iridotom", "tube shunt", "stent implant", "injection", "intravitreal", 
@@ -164,14 +164,14 @@ proc_triggers = [
 ]
 pd.DataFrame(proc_triggers, columns=['Trigger_Word']).to_csv('tables/Table_S3_2_Surgical_Triggers.csv', index=False)
 
-# S4.1 AI Patterns
+# AI Patterns
 ai_patterns = [
     "artificial intelligence", "machine learning", "deep learning", "neural network", "computer vision", "algorithm", 
     "automated", "teleophthalm", "telemedicine", "remote monitoring", "smartphone", "mobile app", "digital health"
 ]
 pd.DataFrame(ai_patterns, columns=['AI_Pattern']).to_csv('tables/Table_S4_1_AI_Patterns.csv', index=False)
 
-# S4.2 Sponsor Mapping
+#Sponsor Mapping
 sponsor_logic = [
     {'Pattern': 'NIH', 'Bucket': 'NIH'},
     {'Pattern': 'FED', 'Bucket': 'U.S. Fed'},
