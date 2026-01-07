@@ -49,7 +49,7 @@ heatmap_variations = [
 
 for var_name, cmap_name, desc in heatmap_variations:
     plt.figure(figsize=(14, 10))
-    # Use a slightly larger font for annotations in the heatmap cells
+    #larger font for annotations heatmap cells
     sns.heatmap(heatmap_data, annot=True, fmt='d', cmap=cmap_name, 
                 linewidths=.5, cbar_kws={'label': 'Number of Trials'},
                 annot_kws={"size": 11}) 
@@ -75,7 +75,7 @@ sponsor_counts['Total'] = sponsor_counts.sum(axis=1)
 sponsor_counts['Industry_Pct'] = (sponsor_counts['Industry'] / sponsor_counts['Total']) * 100
 sponsor_counts = sponsor_counts.sort_values('Industry_Pct', ascending=False)
 
-# (inherently colorblind safe)
+# colorblind safe 
 bar_variations = [
     ('A_Academic_Blue', 'Blues_r', 'Standard Academic Blue'),
     ('B_Neutral_Grey', 'Greys_r', 'Neutral Greyscale for print'),
@@ -92,9 +92,9 @@ for var_name, palette_name, desc in bar_variations:
     plt.ylabel('Subspecialty', fontweight='bold')
     plt.xlim(0, 105) # Give space for labels
     ax.xaxis.set_major_formatter(mtick.PercentFormatter())
-    ax.grid(axis='x', linestyle='--') # Add vertical gridlines for easier reading
+    ax.grid(axis='x', linestyle='--') # vertical gridlines
 
-    # Add text labels
+    # labels
     for i, v in enumerate(sponsor_counts['Industry_Pct']):
         ax.text(v + 1, i, f"{v:.1f}%", color='black', va='center', fontsize=11)
 
@@ -104,23 +104,21 @@ for var_name, palette_name, desc in bar_variations:
     print(f"  > Saved {filename} ({desc})")
     plt.close()
 
-
 # ==============================================================================
 # RETINA TRENDS VARIATIONS 
 # ==============================================================================
-
 
 retina_types = ['Medical Retina', 'Surgical Retina', 'Retina (Other/Unclear)']
 df_retina = df[df['final_category'].isin(retina_types)]
 trend_data = df_retina.groupby(['year', 'final_category']).size().reset_index(name='count')
 trend_data = trend_data[(trend_data['year'] >= 1999) & (trend_data['year'] <= 2025)]
 
-# --- Seaborn ---
+# --Sea Color Scheme--
 plt.figure(figsize=(12, 8))
 sns.lineplot(data=trend_data, x='year', y='count', hue='final_category', 
-             style='final_category', # Vary style too, not just color
+             style='final_category',
              markers=True, dashes=False, linewidth=3, markersize=10,
-             palette='colorblind') # Use Seaborn's built-in CVD palette
+             palette='colorblind') 
 
 plt.title('Figure 3 (Var A): Longitudinal Trends in Retina Research (1999-2025)', pad=20)
 plt.ylabel('Number of New Trials Registered', fontweight='bold')
@@ -132,12 +130,11 @@ plt.savefig('outputs/Figure_3_Trends_A_ColorblindPalette.png', dpi=300)
 print("  > Saved Figure_3_Trends_A_ColorblindPalette.png")
 plt.close()
 
-# --- High-Contrast---
-# This is the most robust for black-and-white printing and severe colorblindness
+# --- High-Contrast--- [Black/White]
 custom_palette = {
-    'Medical Retina': '#004488',      # Dark Blue (High contrast)
-    'Surgical Retina': '#DDAA33',     # Dark Yellow/Gold (Distinct from blue)
-    'Retina (Other/Unclear)': '#BB5566' # Muted Red/Rose (Distinct from others)
+    'Medical Retina': '#004488',      # Dark Blue
+    'Surgical Retina': '#DDAA33',     # Dark Yellow/Gold 
+    'Retina (Other/Unclear)': '#BB5566' # Muted Red/Rose
 }
 custom_styles = {
     'Medical Retina': (1, 0),        # Solid line
