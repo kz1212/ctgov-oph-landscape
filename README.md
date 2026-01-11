@@ -137,9 +137,9 @@ Notes
 
 Note on Analysis:
 This pipeline is designed to provide the definitive aggregate of information as a file. While the code
-does NOT generates basic heatmaps and trend tables during the process, users are encouraged to use
+does NOT perform every analysis explored, users are encouraged to use
 oph_analysis_ready.csv for custom visualizations and specific statistical comparisons not explicitly
-covered in the scripts.
+covered in the scripts. All interpretation can be performed directly form the frozen data set within the software of their choosing. 
 
 Note on Data Interpretation:
 We recommend using study_first_posted_date for identifying the year of the study. start_date is not
