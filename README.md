@@ -48,7 +48,7 @@ Dependencies
 ---------------------------------------------------------------------------
 
 Install the required packages: <br>
-pip install pandas numpy sqlalchemy psycopg2-binary python-dotenv pyarrow seaborn matplotlib
+```pip install pandas numpy sqlalchemy psycopg2-binary python-dotenv pyarrow seaborn matplotlib```
 
 ---------------------------------------------------------------------------
 Configuration
