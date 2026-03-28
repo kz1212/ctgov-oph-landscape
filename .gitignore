@@ -1,0 +1,11 @@
+# Credentials
+.env
+
+# Local Data & Figures (Keep the repo clean)
+outputs/
+tables/
+
+# Python/System Junk
+__pycache__/
+*.pyc
+.DS_Store
