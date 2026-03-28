@@ -54,7 +54,7 @@ pip install pandas numpy sqlalchemy psycopg2-binary python-dotenv pyarrow seabor
 Configuration
 ---------------------------------------------------------------------------
 
-Request Access: If you do not have an account, register for free at the CTTI AACT [website]([url](https://aact.ctti-clinicaltrials.org/users/sign_up)).
+Request Access: If you do not have an account, register for free at the [CTTI AACT website](https://aact-db.ctti-clinicaltrials.org/users/sign_up).
 
 Create a .env file in the root directory. Do not commit this file to version control.
 
