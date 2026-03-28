@@ -48,13 +48,13 @@ Dependencies
 ---------------------------------------------------------------------------
 
 Install the required packages:
-pip install pandas numpy sqlalchemy psycopg2-binary python-dotenv pyarrow
+pip install pandas numpy sqlalchemy psycopg2-binary python-dotenv pyarrow seaborn matplotlib
 
 ---------------------------------------------------------------------------
 Configuration
 ---------------------------------------------------------------------------
 
-Request Access: If you do not have an account, register for free at the CTTI AACT website.
+Request Access: If you do not have an account, register for free at the CTTI AACT [website]([url](https://aact.ctti-clinicaltrials.org/users/sign_up)).
 
 Create a .env file in the root directory. Do not commit this file to version control.
 
@@ -88,7 +88,7 @@ Usage: The Pipeline
 The analysis is consolidated into four sequential steps. Run them in order:
 
 ##1. Build the Cohort (run_pipeline.py)##
-Extracts IDs using MeSH ("Eye Diseases") and Regex Text Search. Merges them, fetches metadata (Title, Phase, Sponsor, Enrollment), and applies the hierarchical classification logic.
+Extracts IDs using MeSH ("Eye Diseases") and Regex Text Search. Merges them, fetches metadata (Title, Phase, Sponsor, Enrollment), and applies the hierarchical classification logic and Procedural Up-Rank Rule. 
 
 Key Logic: MeSH > Regex > General.
 
@@ -108,7 +108,7 @@ Figure 3: Longitudinal Retina Research Trends (Line Plot).
 Output: outputs/Figure_*.png
 
 ##3. Generate Manuscript Tables (make_manuscript_tables.py)##
-Calculates aggregate statistics and exports definition dictionaries for the Supplement.
+Calculates aggregate statistics and exports definition dictionaries for the Supplement, excluding the pediatric analysis (included as an optional step below).
 
 Tables: AI Prevalence, Phase Distribution, Cohort Flow, Unclassified Analysis.
 
@@ -139,13 +139,24 @@ Note on Analysis:
 This pipeline is designed to provide the definitive aggregate of information as a file. While the code
 does NOT perform every analysis explored, users are encouraged to use
 oph_analysis_ready.csv for custom visualizations and specific statistical comparisons not explicitly
-covered in the scripts. All interpretation can be performed directly form the frozen data set within the software of their choosing. 
+covered in the scripts. All interpretation can be performed directly from the frozen data set within the software of their choosing. 
 
-Please note that, *after* this pipline has been run, the optional pediatric_keyword_screen.py may be run for replication of the specific sensitivity analysis that was performed. This will require you rename the (oph_master_final_rebuild) to match the file name / path on your device. 
+Optional Step: 
+Please note that, *after* this pipeline has been run, the optional pediatric_keyword_screen.py may be run for replication of the specific sensitivity analysis that was performed. This will require you rename the (oph_master_final_rebuild) to match the file name / path on your device. 
 
 Note on Data Interpretation:
 We recommend using study_first_posted_date for identifying the year of the study. start_date is not
 reliable for trend plots as it often contains future placeholder dates (e.g., 2099).
 
 Ethics:
-All data are derived from public trial registry records (ClinicalTrials.gov). No IRB approval is required for this aggregate analysis.
+All data are derived from public trial registry records (ClinicalTrials.gov). No IRB approval was required for this aggregate analysis.
+
+---------------------------------------------------------------------------
+Citation & Contact
+---------------------------------------------------------------------------
+
+If you use this pipeline or dataset in your research, please cite:
+Khan, Z. et al. (2026). Ocular Clinical Trial Variability: An AACT Landscape Analysis (1999-2025). 
+GitHub Repository: https://github.com/kz1212/ctgov-oph-landscape.git
+
+For inquiries: khanzs@odu.edu
