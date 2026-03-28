@@ -68,7 +68,7 @@ AACT_PASSWORD=YOUR_PASSWORD
 Execution Instructions
 ---------------------------------------------------------------------------
 
-## Setup ### Environment Variables Create a file named .env in the root directory to store your database credentials. Do not commit this file.
+## Setup ### Environment Variables Create a file named .env in the root directory to store your database credentials (Do not commit this file).
 
 ini
 AACT_USER=your_username
@@ -141,9 +141,11 @@ does NOT perform every analysis explored, users are encouraged to use
 oph_analysis_ready.csv for custom visualizations and specific statistical comparisons not explicitly
 covered in the scripts. All interpretation can be performed directly form the frozen data set within the software of their choosing. 
 
+Please note that, *after* this pipline has been run, the optional pediatric_keyword_screen.py may be run for replication of the specific sensitivity analysis that was performed. This will require you rename the (oph_master_final_rebuild) to match the file name / path on your device. 
+
 Note on Data Interpretation:
 We recommend using study_first_posted_date for identifying the year of the study. start_date is not
 reliable for trend plots as it often contains future placeholder dates (e.g., 2099).
 
 Ethics:
-All data are derived from public trial registry records (ClinicalTrials.gov). No IRB approval is required    for this aggregate analysis.
+All data are derived from public trial registry records (ClinicalTrials.gov). No IRB approval is required for this aggregate analysis.
